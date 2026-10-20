@@ -1,0 +1,48 @@
+.radio-group {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.65rem, 2.5vw, 0.85rem);
+  min-width: 0;
+}
+
+.radio-group__label {
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.1px;
+  padding: 0;
+  margin: 0;
+}
+
+.radio-group__required {
+  color: var(--app-primary-orange, #e66100);
+  font-weight: 800;
+  margin-left: 2px;
+}
+
+.radio-group__helper {
+  margin: 0;
+  margin-top: -0.2rem;
+  font-size: 0.87rem;
+  color: #4b5563;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.radio-group__error {
+  margin: 0;
+  margin-top: -0.2rem;
+  font-size: 0.87rem;
+  color: #b91c1c;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.55rem, 2.2vw, 0.75rem);
+}
