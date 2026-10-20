@@ -1,0 +1,28 @@
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: clamp(0.75rem, 2.5vw, 1rem);
+}
+
+.user-header__avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--app-primary-orange), #ff8a33);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(230, 97, 0, 0.4);
+}
+
+.user-header__nome {
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  font-weight: 600;
+  color: var(--app-text-primary);
+  opacity: 0.9;
+}

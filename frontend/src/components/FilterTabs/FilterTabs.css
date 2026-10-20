@@ -1,0 +1,41 @@
+.filter-tabs {
+  display: flex;
+  gap: clamp(0.5rem, 1.8vw, 0.75rem);
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tabs__item {
+  flex-shrink: 0;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid #9ca3af;
+  background: #d1d5db;
+  color: #4b5563;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.filter-tabs__item:hover {
+  background: #c7ccd3;
+}
+
+.filter-tabs__item--active {
+  background: var(--app-primary-orange);
+  color: #fff;
+  border-color: var(--app-primary-orange);
+  box-shadow: 0 4px 14px rgba(230, 97, 0, 0.35);
+}
+
+.filter-tabs__item--active:hover {
+  background: #d15900;
+  border-color: #d15900;
+}
