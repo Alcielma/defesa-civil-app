@@ -1,2 +1,121 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* ==========================================================================
+   THEME — Arquivo de tokens de design do Sistema de Vistorias da Defesa Civil
+   Garanhuns-PE.
+   ==========================================================================
+   Este arquivo é carregado GLOBALMENTE em App.tsx e define:
+   1. Cores OFICIAIS do Ionic (--ion-color-*): usadas por componentes <IonButton>,
+      <IonCard>, <IonToolbar>, <IonToast>, etc.
+   2. Cores e sombras CUSTOM do app (--app-*): usadas por componentes React
+      customizados (Button, Input, páginas) via CSS nativo.
+   3. Variantes de cor automáticas geradas pelo Ionic (tint = mais clara,
+      shade = mais escura, contrast = cor do texto sobre o fundo, rgb = valores
+      separados por vírgula para efeitos de opacidade rgba()).
+   ========================================================================== */
+
+:root {
+  /* --------------------------------------------------------------------------
+     1. COR PRIMÁRIA — AZUL MARINHO (#0a2463)
+     Identidade visual principal. Usada em: header Ionic, toolbar, botões
+     secundários, links, ícones de destaque.
+     -------------------------------------------------------------------------- */
+  --ion-color-primary: #0a2463;
+  --ion-color-primary-rgb: 10, 36, 99;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #092057;
+  --ion-color-primary-tint: #233a73;
+
+  /* --------------------------------------------------------------------------
+     2. COR SECUNDÁRIA — LARANJA (#e66100)
+     Cor de DESTAQUE / CTA. Usada em: botão "Entrar", botão "Nova Vistoria",
+     marcação de items selecionados em tabs, glow de elementos importantes.
+     -------------------------------------------------------------------------- */
+  --ion-color-secondary: #e66100;
+  --ion-color-secondary-rgb: 230, 97, 0;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #ca5500;
+  --ion-color-secondary-tint: #e9711a;
+
+  /* --------------------------------------------------------------------------
+     3. COR TERCIÁRIA — CINZA AZULADO (#1e293b)
+     Fundo de cards, inputs, containers secundários. Contrasta com o fundo mais
+     escuro (--app-bg-dark) sem ser branco.
+     -------------------------------------------------------------------------- */
+  --ion-color-tertiary: #1e293b;
+  --ion-color-tertiary-rgb: 30, 41, 59;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #1a2434;
+  --ion-color-tertiary-tint: #353e4f;
+
+  /* --------------------------------------------------------------------------
+     4. CORES DE SINALIZAÇÃO (Ionic)
+     Usadas em toasts, alertas, badges e feedbacks de formulário.
+     -------------------------------------------------------------------------- */
+  --ion-color-success: #2dd36f;   /* Verde — sucesso / vistoria concluída */
+  --ion-color-success-rgb: 45, 211, 111;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  --ion-color-warning: #ffc409;   /* Amarelo — alerta / em andamento */
+  --ion-color-warning-rgb: 255, 196, 9;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  --ion-color-danger: #eb445a;    /* Vermelho — erro / perigo / exclusão */
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  --ion-color-medium: #92949c;    /* Cinza médio — texto desabilitado */
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #000000;
+  --ion-color-medium-contrast-rgb: 0, 0, 0;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  --ion-color-light: #f4f5f8;     /* Cinza claro — fundo em modo claro (inativo) */
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /* --------------------------------------------------------------------------
+     5. CORES GLOBAIS DO IONIC (estrutura do app)
+     -------------------------------------------------------------------------- */
+  --ion-background-color: #0f172a;      /* Fundo PRINCIPAL do app (escuro slate-900) */
+  --ion-background-color-rgb: 15, 23, 42;
+  --ion-text-color: #f8fafc;             /* Texto principal (branco suave slate-50) */
+  --ion-text-color-rgb: 248, 250, 252;
+  --ion-item-background: #1e293b;        /* Fundo de <IonItem> (listas) */
+  --ion-card-background: #1e293b;        /* Fundo de <IonCard> */
+  --ion-toolbar-background: #0a2463;     /* Fundo do Header Ionic (azul primário) */
+  --ion-toolbar-color: #ffffff;          /* Texto do Header */
+  --ion-tab-bar-background: #0a2463;     /* Fundo da TabBar (se usarmos tabs) */
+  --ion-tab-bar-color: #cbd5e1;          /* Tab deselecionada */
+  --ion-tab-bar-color-selected: #e66100; /* Tab SELECIONADA (laranja) */
+  --ion-border-color: #334155;           /* Bordas e divisórias (cinza-700) */
+
+  /* --------------------------------------------------------------------------
+     6. TOKENS CUSTOM DO APP (Componentes React nativos — Button, Input, Login, etc)
+        Estes não são do Ionic — usados diretamente com var(--app-*) nos .css
+        dos nossos componentes customizados.
+     -------------------------------------------------------------------------- */
+  --app-primary-blue: #0a2463;     /* Mesmo valor do --ion-color-primary (sintaxe curta) */
+  --app-primary-orange: #e66100;   /* Mesmo valor do --ion-color-secondary (sintaxe curta) */
+  --app-bg-dark: #0f172a;          /* Fundo escuro geral (repetição p/ componentes fora de IonicPage) */
+  --app-bg-card: #1e293b;          /* Fundo de cards customizados */
+  --app-input-bg: #1e293b;         /* Fundo de inputs (Button, Input.tsx) */
+  --app-text-primary: #f8fafc;     /* Texto principal */
+  --app-text-secondary: #cbd5e1;   /* Texto secundário / subtítulos / placeholder */
+  --app-border-color: #334155;     /* Bordas entre blocos visuais */
+  --app-orange-glow: 0 4px 24px rgba(230, 97, 0, 0.35); /* Glow laranja em CTAs importantes */
+}

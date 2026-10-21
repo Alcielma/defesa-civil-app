@@ -1,0 +1,106 @@
+.step-indicator {
+  background: transparent;
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.85rem, 3vw, 1.25rem) clamp(1.25rem, 4vw, 1.75rem);
+  color: #f8fafc;
+}
+
+.step-indicator__linha-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem) 0 clamp(0.85rem, 3vw, 1.1rem);
+  flex-wrap: wrap;
+}
+
+.step-indicator__contador {
+  font-size: clamp(0.9rem, 2.7vw, 1rem);
+  color: #cbd5e1;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.step-indicator__titulo-etapa {
+  margin: 0;
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-weight: 800;
+  color: #f8fafc;
+  letter-spacing: 0.2px;
+}
+
+.step-indicator__percentual {
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  font-weight: 800;
+  color: var(--app-primary-orange, #e66100);
+}
+
+.step-indicator__bolinhas {
+  display: flex;
+  align-items: center;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0.25rem clamp(0.25rem, 1vw, 0.5rem) 0;
+}
+
+.step-indicator__bolinha {
+  flex: 0 0 auto;
+  width: clamp(30px, 8vw, 40px);
+  height: clamp(30px, 8vw, 40px);
+  border-radius: 50%;
+  background: #1e293b;
+  border: 2px solid #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.step-indicator__conector {
+  flex: 1 1 auto;
+  min-width: 4px;
+  height: 3px;
+  margin: 0 clamp(2px, 0.8vw, 6px);
+  border-radius: 999px;
+  background: #334155;
+  transition: background 0.25s ease;
+}
+
+.step-indicator__conector--ativo {
+  background: var(--app-primary-orange, #e66100);
+}
+
+.step-indicator__bolinha--passada {
+  background: var(--app-primary-orange, #e66100);
+  border-color: var(--app-primary-orange, #e66100);
+}
+
+.step-indicator__bolinha--atual {
+  background: var(--app-primary-orange, #e66100);
+  border-color: var(--app-primary-orange, #e66100);
+  box-shadow: 0 0 0 4px rgba(230, 97, 0, 0.25);
+}
+
+.step-indicator__numero {
+  font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+  font-weight: 800;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: #94a3b8;
+}
+
+.step-indicator__bolinha--passada .step-indicator__numero,
+.step-indicator__bolinha--atual .step-indicator__numero {
+  color: #ffffff;
+}
+
+.step-indicator__concluido {
+  margin: 0;
+  padding-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: clamp(1.05rem, 3.4vw, 1.2rem);
+  font-weight: 700;
+  color: #22c55e;
+}

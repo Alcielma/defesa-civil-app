@@ -1,0 +1,111 @@
+.app-image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.app-image-upload__label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--app-text-secondary);
+}
+
+.app-image-upload__vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  background: var(--app-input-bg);
+  border: 2px dashed var(--app-border-color);
+  border-radius: 14px;
+  color: var(--app-primary-orange);
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.app-image-upload__vazio:hover,
+.app-image-upload__vazio:focus-visible {
+  border-color: var(--app-primary-orange);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(230, 97, 0, 0.18);
+}
+
+.app-image-upload__placeholder {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--app-text-primary);
+}
+
+.app-image-upload__placeholder-sub {
+  font-size: 0.85rem;
+  color: var(--app-text-secondary);
+  opacity: 0.75;
+  text-align: center;
+}
+
+.app-image-upload__preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--app-input-bg);
+  border: 2px solid var(--app-border-color);
+  border-radius: 14px;
+}
+
+.app-image-upload__preview img {
+  display: block;
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.app-image-upload__acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.app-image-upload__acoes button {
+  flex: 1;
+  min-height: 44px;
+  background: transparent;
+  border: 2px solid var(--app-primary-orange);
+  border-radius: 10px;
+  color: var(--app-primary-orange);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-image-upload__acoes .app-image-upload__remover {
+  border-color: var(--ion-color-danger);
+  color: var(--ion-color-danger);
+}
+
+.app-image-upload--error .app-image-upload__vazio,
+.app-image-upload--error .app-image-upload__preview {
+  border-color: var(--ion-color-danger);
+}
+
+.app-image-upload--disabled {
+  opacity: 0.6;
+}
+
+.app-image-upload--disabled button {
+  cursor: not-allowed;
+}
+
+.app-image-upload__error {
+  color: var(--ion-color-danger);
+  font-size: 0.875rem;
+  font-weight: 500;
+}

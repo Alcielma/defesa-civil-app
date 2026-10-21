@@ -1,0 +1,8 @@
+@import './Etapa1.css';
+
+.etapa-grau-risco__cor {
+  display: block;
+  width: clamp(44px, 12vw, 56px);
+  height: 10px;
+  border-radius: 999px;
+}

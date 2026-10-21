@@ -1,0 +1,134 @@
+.app-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.app-input-wrapper--full {
+  width: 100%;
+}
+
+.app-input__label {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--app-text-secondary);
+  letter-spacing: 0.2px;
+}
+
+.app-input__container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--app-input-bg);
+  border: 2px solid var(--app-border-color);
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.app-input-wrapper--sm .app-input__container {
+  min-height: 40px;
+  border-radius: 10px;
+}
+
+.app-input-wrapper--md .app-input__container {
+  min-height: 52px;
+  border-radius: 12px;
+}
+
+.app-input-wrapper--lg .app-input__container {
+  min-height: 64px;
+  border-radius: 14px;
+}
+
+.app-input__container:focus-within {
+  border-color: var(--app-primary-orange);
+  box-shadow: 0 0 0 3px rgba(230, 97, 0, 0.18);
+}
+
+.app-input-wrapper--error .app-input__container {
+  border-color: var(--ion-color-danger);
+}
+
+.app-input-wrapper--error .app-input__container:focus-within {
+  box-shadow: 0 0 0 3px rgba(235, 68, 90, 0.18);
+}
+
+.app-input-wrapper--disabled .app-input__container {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.app-input__field {
+  flex: 1;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--app-text-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0 1rem;
+  height: 100%;
+  min-width: 0;
+}
+
+.app-input__field::placeholder {
+  color: rsgba(203, 213, 225, 0.45);
+}
+
+.app-input-wrapper--disabled .app-input__field {
+  cursor: not-allowed;
+}
+
+.app-input__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--app-primary-orange);
+  flex-shrink: 0;
+}
+
+.app-input__icon--left {
+  padding-left: 1.1rem;
+}
+
+.app-input__icon--right {
+  padding-right: 1.1rem;
+}
+
+.app-input-wrapper--sm .app-input__icon {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.app-input__toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--app-primary-orange);
+  padding: 0;
+  margin-right: 0.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.app-input__toggle:hover {
+  background: rgba(230, 97, 0, 0.12);
+}
+
+.app-input__error {
+  color: var(--ion-color-danger);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.app-input__helper {
+  color: var(--app-text-secondary);
+  opacity: 0.75;
+  font-size: 0.85rem;
+}
