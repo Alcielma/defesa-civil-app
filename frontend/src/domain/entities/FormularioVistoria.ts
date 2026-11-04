@@ -117,6 +117,7 @@ export const OPCOES_SITUACAO_PAREDE: string[] = [
 export interface DadosRevestimentos {
   revestimentoExterno: string[];
   outroRevestimentoExternoEspecificacao: string;
+  percentualRevestimentoExterno: string;
   percentualRevestimentoInterno: string;
   revestimentoInterno: string[];
   outroRevestimentoInternoEspecificacao: string;
@@ -397,6 +398,7 @@ export const FORMULARIO_INICIAL_VAZIO: FormularioVistoria = {
   revestimentos: {
     revestimentoExterno: [],
     outroRevestimentoExternoEspecificacao: '',
+    percentualRevestimentoExterno: '',
     percentualRevestimentoInterno: '',
     revestimentoInterno: [],
     outroRevestimentoInternoEspecificacao: '',
