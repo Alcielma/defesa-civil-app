@@ -34,6 +34,7 @@ class Formulario extends Model
 
         'revestimento_externo',
         'revestimento_externo_especificacao',
+        'percentual_revestimento_externo',
         'percentual_revestimento_interno',
         'revestimento_interno',
         'revestimento_interno_especificacao',
@@ -86,6 +87,7 @@ class Formulario extends Model
         'situacao_parede' => 'array',
         'revestimento_externo' => 'array',
         'revestimento_externo_especificacao' => 'array',
+        'percentual_revestimento_externo' => 'array',
         'percentual_revestimento_interno' => 'array',
         'revestimento_interno' => 'array',
         'revestimento_interno_especificacao' => 'array',
