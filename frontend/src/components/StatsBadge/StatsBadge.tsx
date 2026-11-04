@@ -12,10 +12,6 @@ const StatsBadge = ({ contagem }: StatsBadgeProps) => {
         <span className="stats-badge__number">{contagem.pendentes}</span>
         <span className="stats-badge__label">Pendentes</span>
       </div>
-      <div className="stats-badge__item stats-badge__item--em-curso">
-        <span className="stats-badge__number">{contagem.emCurso}</span>
-        <span className="stats-badge__label">Em curso</span>
-      </div>
       <div className="stats-badge__item stats-badge__item--concluidas">
         <span className="stats-badge__number">{contagem.concluidas}</span>
         <span className="stats-badge__label">Concluídas</span>

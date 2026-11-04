@@ -3,23 +3,33 @@ import './FormularioConcluido.css';
 
 export interface FormularioConcluidoProps {
   onVisualizarDocumento: () => void;
+  onVoltarHome: () => void;
 }
 
-const FormularioConcluido = ({ onVisualizarDocumento }: FormularioConcluidoProps) => {
+const FormularioConcluido = ({
+  onVisualizarDocumento,
+  onVoltarHome,
+}: FormularioConcluidoProps) => {
   return (
-    <div className="etapa-card formulario-concluido">
-      <header className="etapa-card__cabecalho">
-        <h2 className="etapa-card__titulo">Formulário concluído!</h2>
-        <p className="etapa-card__subtitulo">
-          Visualize o documento preenchido e, após conferir as informações, faça o
-          download em PDF
-        </p>
-      </header>
+    <div className="formulario-concluido-overlay">
+      <div className="formulario-concluido-card">
+        <header className="formulario-concluido-card__cabecalho">
+          <h2 className="formulario-concluido-card__titulo">
+            Formulário concluído!
+          </h2>
+          <p className="formulario-concluido-card__subtitulo">
+            Escolha uma das opções abaixo para prosseguir com o documento
+          </p>
+        </header>
 
-      <div className="formulario-concluido__acao">
-        <Button variant="primary" size="lg" onClick={onVisualizarDocumento}>
-          Visualizar documento
-        </Button>
+        <div className="formulario-concluido-card__acoes">
+          <Button variant="primary" size="lg" onClick={onVisualizarDocumento} fullWidth>
+            Visualizar documento
+          </Button>
+          <Button variant="ghost" size="md" onClick={onVoltarHome} fullWidth className="btn-voltar-home">
+            Voltar para Home
+          </Button>
+        </div>
       </div>
     </div>
   );

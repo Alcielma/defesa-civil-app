@@ -49,7 +49,7 @@ const StepIndicator = ({
     <div className="step-indicator" data-etapa-atual={etapaAtual}>
       <div className="step-indicator__linha-superior">
         <span className="step-indicator__contador">
-          Etapas {etapaAtual} de {totalEtapas}
+          Etapas {etapaAtual} de {totalEtapas} {titulo}
         </span>
         <span className="step-indicator__percentual">{percentual}%</span>
       </div>

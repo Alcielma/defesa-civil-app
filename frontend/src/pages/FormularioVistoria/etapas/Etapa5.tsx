@@ -91,24 +91,23 @@ const EtapaRevestimentos = ({ dados, onChange }: EtapaRevestimentosProps) => {
             }
           />
         )}
+        <Input
+          label="Percentual de revestimento externo (%)"
+          placeholder="Ex: 80%"
+          value={dados.percentualRevestimentoExterno}
+          onChange={(e) =>
+            onChange({
+              ...dados,
+              percentualRevestimentoExterno: e.target.value,
+            })
+          }
+        />
 
         <ImageUpload
           label="Imagem do revestimento externo"
           value={dados.imagemRevestimentoExterno}
           onChange={(imagemRevestimentoExterno) =>
             onChange({ ...dados, imagemRevestimentoExterno })
-          }
-        />
-
-        <Input
-          label="Percentual de revestimento interno (%)"
-          placeholder="Ex: 80%"
-          value={dados.percentualRevestimentoInterno}
-          onChange={(e) =>
-            onChange({
-              ...dados,
-              percentualRevestimentoInterno: e.target.value,
-            })
           }
         />
 
@@ -136,6 +135,18 @@ const EtapaRevestimentos = ({ dados, onChange }: EtapaRevestimentosProps) => {
             }
           />
         )}
+
+        <Input
+          label="Percentual de revestimento interno (%)"
+          placeholder="Ex: 80%"
+          value={dados.percentualRevestimentoInterno}
+          onChange={(e) =>
+            onChange({
+              ...dados,
+              percentualRevestimentoInterno: e.target.value,
+            })
+          }
+        />
 
         <ImageUpload
           label="Imagem do revestimento interno"

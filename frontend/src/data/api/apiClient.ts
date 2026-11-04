@@ -51,7 +51,10 @@ const buildUrl = (path: string): string => {
 };
 
 const buildHeaders = (authenticated: boolean, json: boolean): HeadersInit => {
-  const headers: Record<string, string> = { Accept: 'application/json' };
+  const headers: Record<string, string> = { 
+    Accept: 'application/json',
+    'ngrok-skip-browser-warning': 'true' // Ignora a tela de aviso do ngrok para requisições de API
+  };
   if (json) headers['Content-Type'] = 'application/json';
   const token = readToken();
   if (authenticated && token) {

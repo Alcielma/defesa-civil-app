@@ -1,12 +1,93 @@
-@import './etapas/Etapa1.css';
-
-.formulario-concluido {
-  align-items: center;
-  text-align: center;
-}
-
-.formulario-concluido__acao {
+.formulario-concluido-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
   display: flex;
+  align-items: center;
   justify-content: center;
-  padding-top: clamp(0.25rem, 1.5vw, 0.5rem);
+  padding: 20px;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-out;
 }
+
+.formulario-concluido-card {
+  background: #b0b0b0; /* Cor cinza metálica clara da imagem */
+  width: 90%;
+  max-width: 380px;
+  border-radius: 20px;
+  padding: 40px 25px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.formulario-concluido-card__cabecalho {
+  margin-bottom: 30px;
+}
+
+.formulario-concluido-card__titulo {
+  color: #000;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin: 0 0 15px 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.formulario-concluido-card__subtitulo {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  font-weight: 500;
+  margin: 0;
+  padding: 0 5px;
+}
+
+.formulario-concluido-card__acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.formulario-concluido-card__acoes button {
+  --background: #e66000;
+  --background-activated: #c55200;
+  --color: white;
+  --border-radius: 12px;
+  --padding-top: 15px;
+  --padding-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.15rem;
+  width: 100%;
+  max-width: 280px;
+  text-transform: none;
+  box-shadow: 0 4px 15px rgba(230, 96, 0, 0.4);
+  border: 1.5px solid #e66000;
+}
+
+.btn-voltar-home {
+  --background: transparent !important;
+  --color: #e66000 !important;
+  --border-style: none !important;
+  box-shadow: none !important;
+  font-size: 1rem !important;
+  text-decoration: underline;
+  margin-top: 5px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

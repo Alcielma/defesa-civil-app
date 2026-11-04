@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { IonContent, IonPage, useIonRouter, useIonToast } from '@ionic/react';
 import { Button, StepIndicator } from '../../components';
 import {
@@ -21,6 +21,7 @@ import EtapaObservacao from './etapas/Etapa9';
 import EtapaRemocao from './etapas/Etapa10';
 import EtapaGrauRisco from './etapas/Etapa11';
 import EtapaConclusao from './etapas/Etapa12';
+import FormularioConcluido from './FormularioConcluido';
 import './FormularioVistoria.css';
 
 const BackIcon = () => (
@@ -76,6 +77,7 @@ const CloseIcon = () => (
 
 const FormularioVistoria = () => {
   const router = useIonRouter();
+  const contentRef = useRef<HTMLIonContentElement>(null);
   const [presentToast] = useIonToast();
   const [etapaAtual, setEtapaAtual] = useState(1);
   const [dadosFormulario, setDadosFormulario] = useState<FormularioVistoriaEntity>(
@@ -83,6 +85,8 @@ const FormularioVistoria = () => {
   );
   const [erros, setErros] = useState<ErrosEtapa>({});
   const [isSalvando, setIsSalvando] = useState(false);
+  const [showConcluido, setShowConcluido] = useState(false);
+  const [idVistoriaCriada, setIdVistoriaCriada] = useState<string | null>(null);
 
   const totalEtapas = useMemo(() => ETAPAS_FORMULARIO.length, []);
   const infoEtapaAtual = useMemo(
@@ -103,6 +107,7 @@ const FormularioVistoria = () => {
     }
     setErros({});
     setEtapaAtual((e) => Math.max(1, e - 1));
+    contentRef.current?.scrollToTop(400);
   };
 
   const avisar = (message: string, color: 'success' | 'warning' | 'danger') =>
@@ -123,14 +128,20 @@ const FormularioVistoria = () => {
 
     setIsSalvando(true);
     try {
-      const { enviado } = await formularioService.enviar(dadosFormulario);
+      const { enviado, id } = await formularioService.enviar(dadosFormulario);
       avisar(
         enviado
           ? 'Formulário enviado com sucesso!'
           : 'Sem conexão: o formulário foi salvo e será enviado quando houver internet.',
         enviado ? 'success' : 'warning'
       );
-      router.push('/home', 'root', 'replace');
+      
+      if (id) {
+        setIdVistoriaCriada(id);
+        setShowConcluido(true);
+      } else {
+        router.push('/home', 'root', 'replace');
+      }
     } catch (e) {
       const errosBackend = isApiError(e) && e.status === 422 ? mapearErrosBackend(e.errors) : null;
       if (errosBackend) {
@@ -159,6 +170,7 @@ const FormularioVistoria = () => {
     }
 
     setEtapaAtual((e) => Math.min(totalEtapas, e + 1));
+    contentRef.current?.scrollToTop(400);
   };
 
   const atualizarSecao =
@@ -169,6 +181,16 @@ const FormularioVistoria = () => {
         setErros({});
       }
     };
+
+  const handleVisualizarDocumento = () => {
+    if (idVistoriaCriada) {
+      router.push(`/visualizacao-vistoria/${idVistoriaCriada}`, 'forward', 'push');
+    }
+  };
+
+  const handleVoltarHomeConcluido = () => {
+    router.push('/home', 'root', 'replace');
+  };
 
   const renderEtapa = () => {
     switch (etapaAtual) {
@@ -266,7 +288,7 @@ const FormularioVistoria = () => {
 
   return (
     <IonPage className="formulario-page">
-      <IonContent scrollY className="formulario-content">
+      <IonContent scrollY className="formulario-content" ref={contentRef} scrollEvents={true}>
         <div className="formulario-topo">
           <header className="formulario-header">
             <button
@@ -285,6 +307,7 @@ const FormularioVistoria = () => {
             etapaAtual={etapaAtual}
             totalEtapas={totalEtapas}
             tituloEtapa={infoEtapaAtual?.titulo}
+            concluido={showConcluido}
           />
         </div>
 
@@ -301,6 +324,7 @@ const FormularioVistoria = () => {
             leftIcon={<BackIcon />}
             className="formulario-rodape__btn"
             onClick={handleVoltar}
+            disabled={showConcluido}
           >
             {estaNaPrimeiraEtapa ? 'Fechar' : 'Voltar'}
           </Button>
@@ -312,10 +336,18 @@ const FormularioVistoria = () => {
             className="formulario-rodape__btn"
             onClick={handleProxima}
             loading={isSalvando}
+            disabled={showConcluido}
           >
             {estaNaUltimaEtapa ? 'Concluir' : 'Próxima etapa'}
           </Button>
         </footer>
+
+        {showConcluido && (
+          <FormularioConcluido 
+            onVisualizarDocumento={handleVisualizarDocumento} 
+            onVoltarHome={handleVoltarHomeConcluido}
+          />
+        )}
       </IonContent>
     </IonPage>
   );
