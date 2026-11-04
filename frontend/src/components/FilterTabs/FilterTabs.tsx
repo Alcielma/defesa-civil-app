@@ -10,7 +10,6 @@ export interface FilterTabsProps {
 const OPCOES: { valor: FiltroStatus; label: string }[] = [
   { valor: 'TODOS', label: 'Todos' },
   { valor: StatusVistoria.PENDENTE, label: 'Pendentes' },
-  { valor: StatusVistoria.EM_CURSO, label: 'Em curso' },
   { valor: StatusVistoria.CONCLUIDA, label: 'Concluídas' },
 ];
 
