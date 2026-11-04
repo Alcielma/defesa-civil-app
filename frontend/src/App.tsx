@@ -4,6 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import FormularioVistoria from './pages/FormularioVistoria';
+import VisualizacaoVistoria from './pages/VisualizacaoVistoria/VisualizacaoVistoria';
 import { AuthProvider, useAuthStore } from './store/useAuthStore';
 import { iniciarSincronizacao } from './services';
 import { ReactNode, useEffect } from 'react';
@@ -120,6 +121,14 @@ const AppRotas = () => {
           element={
             <RotaProtegida>
               <FormularioVistoria />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/visualizacao-vistoria/:id"
+          element={
+            <RotaProtegida>
+              <VisualizacaoVistoria />
             </RotaProtegida>
           }
         />
