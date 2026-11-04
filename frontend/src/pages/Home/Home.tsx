@@ -70,7 +70,6 @@ const Home = () => {
   const [todasVistorias, setTodasVistorias] = useState<Vistoria[]>([]);
   const [contagem, setContagem] = useState<ContagemVistorias>({
     pendentes: 0,
-    emCurso: 0,
     concluidas: 0,
     total: 0,
   });
@@ -80,9 +79,10 @@ const Home = () => {
   const [modalLogoutAberto, setModalLogoutAberto] = useState(false);
 
   const carregarDados = useCallback(async () => {
+    if (!usuario?.id) return; // Evita carregar se não houver usuário
     setIsLoading(true);
     try {
-      const lista = await listarUseCase.executar(usuario?.id);
+      const lista = await listarUseCase.executar(usuario.id);
       setTodasVistorias(lista);
       setContagem(contarVistoriasPorStatus(lista));
     } catch (e) {
@@ -91,6 +91,13 @@ const Home = () => {
       setIsLoading(false);
     }
   }, [listarUseCase, usuario?.id]);
+
+  // Carrega os dados IMEDIATAMENTE quando o usuário é detectado
+  useEffect(() => {
+    if (usuario?.id) {
+      carregarDados();
+    }
+  }, [usuario?.id, carregarDados]);
 
   // Toda vez que a Home aparece (inclusive ao voltar do formulário).
   useIonViewWillEnter(() => {
@@ -127,8 +134,9 @@ const Home = () => {
   // TODO: navegar para a tela de continuação/edição da vistoria selecionada.
   const handleContinuar = (_v: Vistoria) => {};
 
-  // TODO: navegar para a tela de detalhes/read-only da vistoria concluída.
-  const handleVerDetalhes = (_v: Vistoria) => {};
+  const handleVerDetalhes = (v: Vistoria) => {
+    router.push(`/visualizacao-vistoria/${v.id}`, 'forward', 'push');
+  };
 
   return (
     <IonPage className="home-page">
