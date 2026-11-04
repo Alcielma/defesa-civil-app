@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const resposta = await authService.login(email, senha);
+      setCachedToken(resposta.token); // Garante que o apiClient use o novo token IMEDIATAMENTE
       salvarArmazenamento(resposta.user, resposta.token);
       setUsuario(resposta.user);
       setToken(resposta.token);
