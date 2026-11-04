@@ -1,0 +1,339 @@
+.visualizacao-page {
+  --background: #111827;
+}
+
+.visualizacao-content {
+  --background: #111827;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos base para a tela (Preview) */
+.pdf-container, .force-desktop-layout .pdf-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  background: #111827;
+}
+
+.pdf-page, .force-desktop-layout .pdf-page {
+  background: white;
+  width: 100%;
+  max-width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  color: #000;
+  font-family: 'Arial', sans-serif;
+  font-size: 10pt;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Forçamos o grid de 2 colunas mesmo se estiver no mobile, quando dentro do clone de exportação */
+.force-desktop-layout .pdf-grid-2 {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+}
+
+.force-desktop-layout .pdf-field-row {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: flex-end !important;
+  gap: 5px !important;
+}
+
+.force-desktop-layout .pdf-label {
+  font-size: 8.5pt !important;
+}
+
+.force-desktop-layout .pdf-value {
+  font-size: 9.5pt !important;
+}
+
+.pdf-header {
+  display: flex;
+  gap: 20px;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.pdf-logo img {
+  height: 80px;
+  width: auto;
+}
+
+.pdf-identificacao {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pdf-field-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.pdf-field-row--wrap {
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.pdf-label {
+  font-weight: 800;
+  font-size: 8.5pt;
+  white-space: nowrap;
+  color: #000;
+}
+
+.pdf-value {
+  font-size: 9.5pt;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.pdf-value--line {
+  min-width: 20px;
+  padding: 0 4px;
+}
+
+.pdf-unit {
+  margin-left: -2px;
+  font-weight: bold;
+  font-size: 8.5pt;
+}
+
+.pdf-section {
+  margin-bottom: 10px;
+}
+
+.pdf-section-title {
+  font-size: 11pt;
+  font-weight: 900;
+  border-bottom: 1px solid #000;
+  margin: 5px 0;
+  padding-bottom: 2px;
+}
+
+.pdf-sub-title {
+  font-size: 9pt;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.pdf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pdf-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.pdf-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.pdf-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pdf-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.pdf-option-label {
+  font-size: 7.5pt;
+  color: #000;
+}
+
+.pdf-footer-content {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #000;
+}
+
+.visualizacao-footer {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: #111827;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.btn-baixar {
+  background: #e66000;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(230, 96, 0, 0.4);
+  transition: transform 0.2s;
+}
+
+.btn-baixar:active {
+  transform: scale(0.95);
+}
+
+
+/* Estilos exclusivos para a Impressão (Mantém o formato A4 oficial) */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /* Reset radical para o Ionic */
+  html, body, #root, .visualizacao-page, ion-app, ion-router-outlet, ion-page {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    display: block !important;
+    background: white !important;
+  }
+
+  * {
+    box-sizing: border-box !important;
+  }
+
+  .visualizacao-footer, IonHeader, ion-header {
+    display: none !important;
+  }
+
+  .pdf-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    width: 210mm !important;
+    background: white !important; /* Garante fundo branco no container */
+    gap: 0 !important;
+  }
+
+  .pdf-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 15mm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    position: relative !important;
+    background: white !important;
+    page-break-after: always !important;
+  }
+
+  .pdf-page:last-child {
+    page-break-after: avoid !important;
+  }
+
+  .pdf-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Volta para 2 colunas no PDF */
+    gap: 10px !important;
+  }
+
+  .pdf-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}
+
+/* Responsividade da Grade na Tela */
+@media screen and (max-width: 768px) {
+  .pdf-page {
+    padding: 15px;
+    min-height: auto;
+    border-radius: 8px;
+    width: 95% !important; /* Ocupa a tela mas mantém margem */
+    max-width: none !important;
+  }
+
+  /* Mantém as colunas lado a lado até 600px */
+  .pdf-grid-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Em telas muito pequenas (abaixo de 600px), as colunas empilham */
+  @media (max-width: 600px) {
+    .pdf-grid-2 {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  }
+
+  .pdf-header {
+    flex-direction: row; /* Mantém logo ao lado da identificação */
+    align-items: flex-start;
+    text-align: left;
+    gap: 15px;
+  }
+
+  .pdf-logo img {
+    height: 50px;
+  }
+
+  .pdf-field-row {
+    flex-wrap: nowrap; /* Impede a quebra por padrão */
+    gap: 5px;
+    margin-bottom: 6px;
+    align-items: flex-end;
+  }
+
+  /* Quebra o campo apenas se o conteúdo for realmente muito grande para a tela */
+  @media (max-width: 400px) {
+    .pdf-field-row {
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+    
+    .pdf-value {
+      flex: 1 1 auto; /* Permite que o valor tente ficar ao lado se houver espaço */
+      min-width: 100px; /* Se o espaço for menor que 100px, ele quebra */
+    }
+  }
+
+  .pdf-label {
+    font-size: 8.5pt;
+  }
+
+  .pdf-value {
+    font-size: 9pt;
+  }
+
+  .pdf-section-title {
+    font-size: 11pt;
+    text-align: left;
+    background: transparent;
+    padding: 0;
+    border-bottom: 1px solid #000;
+  }
+}
