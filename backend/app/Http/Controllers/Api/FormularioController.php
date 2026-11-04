@@ -35,6 +35,7 @@ class FormularioController extends Controller
 
             'revestimento_externo'                => 'nullable',
             'revestimento_externo_especificacao'  => 'nullable',
+            'percentual_revestimento_externo'     => 'nullable',
             'percentual_revestimento_interno'     => 'nullable',
             'revestimento_interno'                => 'nullable',
             'revestimento_interno_especificacao'  => 'nullable',
@@ -87,11 +88,15 @@ class FormularioController extends Controller
 
     public function index(Request $request)
     {
+        \Log::info('Buscando formulários para usuário: ' . $request->user()->id);
+        
         $formularios = Formulario::where('user_id', $request->user()->id)
-            ->orderBy('created_at', 'desc')
+            ->latest()
             ->get();
 
-        return response()->json($formularios);
+        return response()->json([
+            'data' => $formularios
+        ]);
     }
 
     public function show(Request $request, $id)
@@ -100,7 +105,9 @@ class FormularioController extends Controller
             ->where('user_id', $request->user()->id)
             ->firstOrFail();
 
-        return response()->json($formulario);
+        return response()->json([
+            'data' => $formulario
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -134,6 +141,7 @@ class FormularioController extends Controller
 
             'revestimento_externo'                => 'nullable',
             'revestimento_externo_especificacao'  => 'nullable',
+            'percentual_revestimento_externo'     => 'nullable',
             'percentual_revestimento_interno'     => 'nullable',
             'revestimento_interno'                => 'nullable',
             'revestimento_interno_especificacao'  => 'nullable',
