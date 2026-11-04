@@ -1,5 +1,6 @@
 import {
   FormularioVistoria,
+  FORMULARIO_INICIAL_VAZIO,
   OPCAO_PISO_OUTRO,
   StatusVistoria,
   Vistoria,
@@ -95,6 +96,7 @@ export const mapearFormularioParaBackend = (
   if (revestimentos) {
     payload.revestimento_externo = revestimentos.revestimentoExterno;
     payload.revestimento_externo_especificacao = textoOuNull(revestimentos.outroRevestimentoExternoEspecificacao);
+    payload.percentual_revestimento_externo = textoOuNull(revestimentos.percentualRevestimentoExterno);
     payload.percentual_revestimento_interno = textoOuNull(revestimentos.percentualRevestimentoInterno);
     payload.revestimento_interno = revestimentos.revestimentoInterno;
     payload.revestimento_interno_especificacao = textoOuNull(revestimentos.outroRevestimentoInternoEspecificacao);
@@ -165,9 +167,126 @@ type FormularioBackendShape = {
   localidade?: string;
   preenchido_em?: string | null;
   created_at?: string | null;
+  [key: string]: unknown;
 };
 
 const textoDe = (valor: unknown): string => (typeof valor === 'string' ? valor.trim() : '');
+
+const arrayDe = (valor: unknown): string[] => {
+  if (Array.isArray(valor)) return valor.map(String);
+  if (typeof valor === 'string') return [valor];
+  return [];
+};
+
+/**
+ * Converte um formulário do backend para a entidade do frontend.
+ */
+export const mapearBackendParaFormulario = (raw: unknown): FormularioVistoria => {
+  if (!raw || typeof raw !== 'object') return FORMULARIO_INICIAL_VAZIO;
+  const f = raw as FormularioBackendShape;
+
+  return {
+    identificacao: {
+      localidade: textoDe(f.localidade),
+      setor: textoDe(f.setor),
+      titular: textoDe(f.titular),
+      endereco: textoDe(f.endereco),
+      numero: textoDe(f.numero),
+    },
+    caracteristicasImovel: {
+      localizacao: arrayDe(f.localizacao),
+      principaisCausas: arrayDe(f.causas_problemas),
+      imagemLocalizacao: '',
+      imagemPrincipaisCausas: '',
+    },
+    padraoConstrutivo: {
+      numeroPavimentos: String(f.num_pavimentos ?? ''),
+      areaAproximada: String(f.area_aproximada ?? ''),
+      numeroComodos: String(f.num_comodos ?? ''),
+      numeroDormitorios: String(f.num_dormitorios ?? ''),
+      tempoConstrucao: String(f.tempo_construcao_anos ?? ''),
+      piso: arrayDe(f.piso),
+      outroPisoEspecificacao: textoDe(f.piso_especificacao),
+      situacaoPiso: arrayDe(f.situacao_piso),
+      imagemPiso: '',
+      imagemSituacaoPiso: '',
+    },
+    estrutura: {
+      estrutura: arrayDe(f.estrutura),
+      vedacao: arrayDe(f.vedacao),
+      outraVedacaoEspecificacao: textoDe(f.vedacao_especificacao),
+      situacaoParede: arrayDe(f.situacao_parede),
+      imagemEstrutura: '',
+      imagemVedacao: '',
+      imagemSituacaoParede: '',
+    },
+    revestimentos: {
+      revestimentoExterno: arrayDe(f.revestimento_externo),
+      outroRevestimentoExternoEspecificacao: textoDe(f.revestimento_externo_especificacao),
+      percentualRevestimentoExterno: textoDe(f.percentual_revestimento_externo),
+      percentualRevestimentoInterno: textoDe(f.percentual_revestimento_interno),
+      revestimentoInterno: arrayDe(f.revestimento_interno),
+      outroRevestimentoInternoEspecificacao: textoDe(f.revestimento_interno_especificacao),
+      cobertura: arrayDe(f.cobertura),
+      outraCoberturaEspecificacao: textoDe(f.cobertura_especificacao),
+      imagemRevestimentoExterno: '',
+      imagemRevestimentoInterno: '',
+      imagemCobertura: '',
+    },
+    conservacao: {
+      conservacaoCobertura: arrayDe(f.conservacao_cobertura),
+      conservacaoEdificacao: arrayDe(f.conservacao_edificacao),
+      instalacaoEletrica: arrayDe(f.instalacao_eletrica),
+      sanitario: arrayDe(f.sanitario),
+      outroSanitarioEspecificacao: textoDe(f.sanitario_especificacao),
+      imagemConservacaoCobertura: '',
+      imagemConservacaoEdificacao: '',
+      imagemInstalacaoEletrica: '',
+      imagemSanitario: '',
+    },
+    destinos: {
+      destinoEsgoto: arrayDe(f.destino_esgoto_primario),
+      outroDestinoEsgotoEspecificacao: textoDe(f.destino_esgoto_primario_especificacao),
+      destinoAguasServidas: arrayDe(f.destino_aguas_servidas),
+      outroDestinoAguasServidasEspecificacao: textoDe(f.destino_aguas_servidas_especificacao),
+      destinoLixo: arrayDe(f.destino_lixo),
+      outroDestinoLixoEspecificacao: textoDe(f.destino_lixo_especificacao),
+      imagemDestinoEsgoto: '',
+      imagemDestinoAguasServidas: '',
+      imagemDestinoLixo: '',
+    },
+    intervencoes: {
+      parede: arrayDe(f.intervencao_parede),
+      coberta: arrayDe(f.intervencao_coberta),
+      indicacaoAtuacao: arrayDe(f.indicacao_atuacao),
+      indicacaoDemolicao: arrayDe(f.indicacao_demolicao),
+      piso: arrayDe(f.intervencao_piso),
+      imagemParede: '',
+      imagemCoberta: '',
+      imagemIndicacaoAtuacao: '',
+      imagemIndicacaoDemolicao: '',
+      imagemPiso: '',
+    },
+    observacao: {
+      observacoes: textoDe(f.observacoes),
+    },
+    remocao: {
+      motivoRemocao: arrayDe(f.motivo_remocao),
+      outroMotivoRemocaoEspecificacao: textoDe(f.motivo_remocao_especificacao),
+      encaminhamentos: arrayDe(f.encaminhamentos),
+      imagemMotivoRemocao: '',
+      imagemEncaminhamentos: '',
+    },
+    grauRisco: {
+      grauRisco: textoDe(f.grau_risco),
+    },
+    conclusao: {
+      analistaTecnico: textoDe(f.analista_tecnico),
+      chefiaGerente: textoDe(f.chefia_gerente),
+      data: textoDe(f.data_conclusao),
+    },
+  };
+};
 
 /** "Rua das Flores, 123. Bairro São João" (mesmo formato dos cards da Home). */
 const montarEndereco = (f: FormularioBackendShape): string => {
@@ -220,6 +339,7 @@ const CAMPOS_BACKEND: Record<string, { etapa: number; campo: string }> = {
   situacao_parede: { etapa: 4, campo: 'situacaoParede' },
   revestimento_externo: { etapa: 5, campo: 'revestimentoExterno' },
   revestimento_externo_especificacao: { etapa: 5, campo: 'outroRevestimentoExternoEspecificacao' },
+  percentual_revestimento_externo: { etapa: 5, campo: 'percentualRevestimentoExterno' },
   percentual_revestimento_interno: { etapa: 5, campo: 'percentualRevestimentoInterno' },
   revestimento_interno: { etapa: 5, campo: 'revestimentoInterno' },
   revestimento_interno_especificacao: { etapa: 5, campo: 'outroRevestimentoInternoEspecificacao' },
@@ -288,6 +408,8 @@ export const sincronizarItemFormulario = async (item: LocalSyncQueueRow): Promis
 export interface EnvioFormularioResultado {
   /** `true` quando salvo na API; `false` quando ficou na fila offline. */
   enviado: boolean;
+  /** O ID retornado pelo servidor ou o ID gerado na fila local. */
+  id?: string;
 }
 
 export class FormularioService {
@@ -306,6 +428,37 @@ export class FormularioService {
       .filter((v): v is Vistoria => !!v);
   }
 
+  /**
+   * Busca um formulário completo pelo ID da vistoria.
+   */
+  async obterPorVistoriaId(vistoriaId: string): Promise<FormularioVistoria | null> {
+    try {
+      // Primeiro tenta buscar na API se for um ID real
+      if (!vistoriaId.startsWith('fila-') && !vistoriaId.startsWith('local-')) {
+        const raw = await apiClient.get<unknown>(`/formularios/${encodeURIComponent(vistoriaId)}`, {
+          timeoutMs: 10_000,
+        });
+        const data = raw && typeof raw === 'object' && 'data' in raw ? (raw as { data: unknown }).data : raw;
+        return mapearBackendParaFormulario(data);
+      }
+
+      // Se for da fila offline
+      if (vistoriaId.startsWith('fila-')) {
+        const localId = vistoriaId.replace('fila-', '');
+        const queue = await localDb.queue();
+        const item = await queue.get(localId);
+        if (item && item.entity === FORMULARIOS_ENTITY) {
+          return mapearBackendParaFormulario(item.payload);
+        }
+      }
+
+      return null;
+    } catch (e) {
+      console.error(`Erro ao obter formulário ${vistoriaId}:`, e);
+      return null;
+    }
+  }
+
   /** Formulários que ainda estão na fila offline, aguardando envio. */
   async listarNaFila(): Promise<Vistoria[]> {
     const queue = await localDb.queue();
@@ -321,10 +474,11 @@ export class FormularioService {
       .filter((v): v is Vistoria => !!v);
   }
 
-  private async enfileirar(payload: Record<string, unknown>): Promise<void> {
+  private async enfileirar(payload: Record<string, unknown>): Promise<string> {
     const queue = await localDb.queue();
-    await queue.push({ entity: FORMULARIOS_ENTITY, operation: 'create', payload });
+    const item = await queue.push({ entity: FORMULARIOS_ENTITY, operation: 'create', payload });
     syncEngine.sincronizarEmBreve();
+    return `fila-${item.id}`;
   }
 
   /**
@@ -336,19 +490,21 @@ export class FormularioService {
     const payload = mapearFormularioParaBackend(formulario);
 
     if (!networkAdapter.isOnline()) {
-      await this.enfileirar(payload);
-      return { enviado: false };
+      const id = await this.enfileirar(payload);
+      return { enviado: false, id };
     }
 
     try {
-      await apiClient.post('/formularios', payload, { timeoutMs: 10_000 });
-      return { enviado: true };
+      const res = await apiClient.post<any>('/formularios', payload, { timeoutMs: 10_000 });
+      // Assume o backend retorna o objeto criado ou { data: { id: ... } }
+      const id = String(res?.data?.id || res?.id || '');
+      return { enviado: true, id };
     } catch (e) {
       if (isApiError(e) && e.status >= 400 && e.status < 500) {
         throw e;
       }
-      await this.enfileirar(payload);
-      return { enviado: false };
+      const id = await this.enfileirar(payload);
+      return { enviado: false, id };
     }
   }
 }
