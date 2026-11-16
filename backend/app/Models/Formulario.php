@@ -73,6 +73,13 @@ class Formulario extends Model
         'data_conclusao',
 
         'preenchido_em',
+        'pdf_path',
+        'fotos',
+    ];
+
+    protected $appends = [
+        'pdf_url',
+        'fotos_urls',
     ];
 
     protected $casts = [
@@ -113,9 +120,33 @@ class Formulario extends Model
         'motivo_remocao_especificacao' => 'array',
         'encaminhamentos' => 'array',
         'grau_risco' => 'array',
+        'fotos' => 'array',
         'preenchido_em' => 'datetime',
         'data_conclusao' => 'date',
     ];
+
+    public function getPdfUrlAttribute(): ?string
+    {
+        if (!$this->pdf_path) {
+            return null;
+        }
+        return asset('storage/' . $this->pdf_path);
+    }
+
+    public function getFotosUrlsAttribute(): array
+    {
+        if (!is_array($this->fotos)) {
+            return [];
+        }
+
+        $urls = [];
+        foreach ($this->fotos as $campo => $path) {
+            if ($path) {
+                $urls[$campo] = asset('storage/' . $path);
+            }
+        }
+        return $urls;
+    }
 
     public function user(): BelongsTo
     {
