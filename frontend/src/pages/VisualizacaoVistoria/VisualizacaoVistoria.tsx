@@ -14,7 +14,6 @@ import {
 } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import {
-  printOutline,
   chevronBackOutline,
 } from 'ionicons/icons';
 import {
@@ -239,11 +238,6 @@ const VisualizacaoVistoria = () => {
               <PdfFieldRow label="INDICAÇÃO DE ATUAÇÃO" value={getLabels(dados.intervencoes.indicacaoAtuacao, OPCOES_INDICACAO_INTERVENCAO)} wrap />
               <PdfFieldRow label="INDICAÇÃO DE DEMOLIÇÃO" value={getLabels(dados.intervencoes.indicacaoDemolicao, OPCOES_INDICACAO_INTERVENCAO)} wrap />
             </PdfSection>
-
-            <PdfSection title="REMOÇÃO E ENCAMINHAMENTOS:">
-              <PdfFieldRow label="MOTIVO DA REMOÇÃO" value={getLabels(dados.remocao.motivoRemocao, OPCOES_MOTIVO_REMOCAO, dados.remocao.outroMotivoRemocaoEspecificacao)} wrap />
-              <PdfFieldRow label="ENCAMINHAMENTOS" value={getLabels(dados.remocao.encaminhamentos, OPCOES_ENCAMINHAMENTOS)} wrap />
-            </PdfSection>
           </div>
 
           {/* Página 2 */}
@@ -255,6 +249,11 @@ const VisualizacaoVistoria = () => {
               endereco={dados.identificacao.endereco}
               numero={dados.identificacao.numero}
             />
+
+            <PdfSection title="REMOÇÃO E ENCAMINHAMENTOS:">
+              <PdfFieldRow label="MOTIVO DA REMOÇÃO" value={getLabels(dados.remocao.motivoRemocao, OPCOES_MOTIVO_REMOCAO, dados.remocao.outroMotivoRemocaoEspecificacao)} wrap />
+              <PdfFieldRow label="ENCAMINHAMENTOS" value={getLabels(dados.remocao.encaminhamentos, OPCOES_ENCAMINHAMENTOS)} wrap />
+            </PdfSection>
             
             <PdfSection title="OBSERVAÇÕES:">
               <div className="pdf-value pdf-value--box" style={{ minHeight: '200px', padding: '10px', border: '1px solid #000', marginTop: '10px', lineHeight: '1.5' }}>

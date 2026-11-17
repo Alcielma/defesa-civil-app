@@ -36,9 +36,11 @@ export const usePdfExport = () => {
       spinner: 'crescent'
     });
 
+    let tempContainer: HTMLDivElement | null = null;
+
     try {
       // Cria um container temporário visível, mas fora da tela
-      const tempContainer = document.createElement('div');
+      tempContainer = document.createElement('div');
       tempContainer.className = 'pdf-export-temp-container';
       // Adicionamos uma classe específica para forçar o layout desktop no clone
       tempContainer.classList.add('force-desktop-layout');
@@ -63,6 +65,8 @@ export const usePdfExport = () => {
 
       // Aguarda renderização
       await new Promise(resolve => setTimeout(resolve, 500));
+
+      const expectedPageCount = clone.querySelectorAll('.pdf-page').length;
 
       const opt = {
         margin: 0,
@@ -101,10 +105,22 @@ export const usePdfExport = () => {
       };
 
       const isNative = Capacitor.isNativePlatform();
+      const worker = html2pdf().set(opt).from(clone);
+
+      await worker.toPdf();
+
+      const pdf = await worker.get('pdf');
+      const getPageCount = () => pdf.internal.getNumberOfPages();
+
+      // O html2pdf pode criar uma página extra em branco ao final mesmo quando o layout tem
+      // exatamente N páginas. Removemos qualquer excedente além das páginas reais do documento.
+      while (getPageCount() > expectedPageCount) {
+        pdf.deletePage(getPageCount());
+      }
 
       if (isNative) {
         // No Mobile (Capacitor): Gera o PDF como base64 e usa o Filesystem + Share
-        const pdfBase64 = await html2pdf().set(opt).from(clone).output('datauristring');
+        const pdfBase64 = pdf.output('datauristring');
         const base64Content = pdfBase64.split(',')[1];
         const fullFileName = `${fileName}.pdf`;
 
@@ -125,10 +141,8 @@ export const usePdfExport = () => {
 
       } else {
         // No Navegador (Desktop/Web): Download direto padrão
-        await html2pdf().set(opt).from(clone).save();
+        await worker.save();
       }
-
-      document.body.removeChild(tempContainer);
 
       presentToast({
         message: isNative ? 'PDF pronto para salvar ou compartilhar!' : 'PDF baixado com sucesso!',
@@ -145,6 +159,9 @@ export const usePdfExport = () => {
         position: 'bottom',
       });
     } finally {
+      if (tempContainer?.parentNode) {
+        tempContainer.parentNode.removeChild(tempContainer);
+      }
       dismissLoading();
     }
   };
