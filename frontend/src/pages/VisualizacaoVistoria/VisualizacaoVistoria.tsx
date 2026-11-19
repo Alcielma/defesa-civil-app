@@ -46,6 +46,33 @@ import { usePdfExport } from '@/hooks/usePdfExport';
 import { PdfHeader, PdfSection, PdfFieldRow, PdfFooter } from './components';
 import './VisualizacaoVistoria.css';
 
+const IMAGE_LABELS: Record<string, string> = {
+  imagemLocalizacao: 'Localização',
+  imagemPrincipaisCausas: 'Principais Causas',
+  imagemPiso: 'Piso',
+  imagemSituacaoPiso: 'Situação do Piso',
+  imagemEstrutura: 'Estrutura',
+  imagemVedacao: 'Vedação',
+  imagemSituacaoParede: 'Situação da Parede',
+  imagemRevestimentoExterno: 'Revestimento Externo',
+  imagemRevestimentoInterno: 'Revestimento Interno',
+  imagemCobertura: 'Cobertura',
+  imagemConservacaoCobertura: 'Conservação da Coberta',
+  imagemConservacaoEdificacao: 'Conservação da Edificação',
+  imagemInstalacaoEletrica: 'Instalação Elétrica',
+  imagemSanitario: 'Sanitário',
+  imagemDestinoEsgoto: 'Destino de Esgoto',
+  imagemDestinoAguasServidas: 'Águas Servidas',
+  imagemDestinoLixo: 'Destino de Lixo',
+  imagemParede: 'Intervenção Parede',
+  imagemCoberta: 'Intervenção Coberta',
+  imagemIndicacaoAtuacao: 'Indicação de Atuação',
+  imagemIndicacaoDemolicao: 'Indicação de Demolição',
+  imagemPisoIntervencao: 'Intervenção Piso',
+  imagemMotivoRemocao: 'Motivo da Remoção',
+  imagemEncaminhamentos: 'Encaminhamentos',
+};
+
 const DownloadIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -115,6 +142,46 @@ const VisualizacaoVistoria = () => {
         </IonContent>
       </IonPage>
     );
+  }
+
+  // Coleta todas as imagens que possuem valor
+  const fotos: { label: string; url: string }[] = [];
+  
+  const adicionarSeExiste = (labelKey: string, url?: string) => {
+    if (url && url.trim()) {
+      fotos.push({ label: IMAGE_LABELS[labelKey] || labelKey, url });
+    }
+  };
+
+  adicionarSeExiste('imagemLocalizacao', dados.caracteristicasImovel.imagemLocalizacao);
+  adicionarSeExiste('imagemPrincipaisCausas', dados.caracteristicasImovel.imagemPrincipaisCausas);
+  adicionarSeExiste('imagemPiso', dados.padraoConstrutivo.imagemPiso);
+  adicionarSeExiste('imagemSituacaoPiso', dados.padraoConstrutivo.imagemSituacaoPiso);
+  adicionarSeExiste('imagemEstrutura', dados.estrutura.imagemEstrutura);
+  adicionarSeExiste('imagemVedacao', dados.estrutura.imagemVedacao);
+  adicionarSeExiste('imagemSituacaoParede', dados.estrutura.imagemSituacaoParede);
+  adicionarSeExiste('imagemRevestimentoExterno', dados.revestimentos.imagemRevestimentoExterno);
+  adicionarSeExiste('imagemRevestimentoInterno', dados.revestimentos.imagemRevestimentoInterno);
+  adicionarSeExiste('imagemCobertura', dados.revestimentos.imagemCobertura);
+  adicionarSeExiste('imagemConservacaoCobertura', dados.conservacao.imagemConservacaoCobertura);
+  adicionarSeExiste('imagemConservacaoEdificacao', dados.conservacao.imagemConservacaoEdificacao);
+  adicionarSeExiste('imagemInstalacaoEletrica', dados.conservacao.imagemInstalacaoEletrica);
+  adicionarSeExiste('imagemSanitario', dados.conservacao.imagemSanitario);
+  adicionarSeExiste('imagemDestinoEsgoto', dados.destinos.imagemDestinoEsgoto);
+  adicionarSeExiste('imagemDestinoAguasServidas', dados.destinos.imagemDestinoAguasServidas);
+  adicionarSeExiste('imagemDestinoLixo', dados.destinos.imagemDestinoLixo);
+  adicionarSeExiste('imagemParede', dados.intervencoes.imagemParede);
+  adicionarSeExiste('imagemCoberta', dados.intervencoes.imagemCoberta);
+  adicionarSeExiste('imagemIndicacaoAtuacao', dados.intervencoes.imagemIndicacaoAtuacao);
+  adicionarSeExiste('imagemIndicacaoDemolicao', dados.intervencoes.imagemIndicacaoDemolicao);
+  adicionarSeExiste('imagemPisoIntervencao', dados.intervencoes.imagemPiso);
+  adicionarSeExiste('imagemMotivoRemocao', dados.remocao.imagemMotivoRemocao);
+  adicionarSeExiste('imagemEncaminhamentos', dados.remocao.imagemEncaminhamentos);
+
+  // Agrupa fotos em pares para as páginas do PDF (4 por página)
+  const paginasFotos: { label: string; url: string }[][] = [];
+  for (let i = 0; i < fotos.length; i += 4) {
+    paginasFotos.push(fotos.slice(i, i + 4));
   }
 
   return (
@@ -240,7 +307,35 @@ const VisualizacaoVistoria = () => {
             </PdfSection>
           </div>
 
-          {/* Página 2 */}
+          {/* Páginas de Registros Fotográficos (2 por página) */}
+          {paginasFotos.map((par, index) => (
+            <div key={`page-photo-${index}`} className="pdf-page A4">
+              <PdfHeader 
+                localidade={dados.identificacao.localidade}
+                setor={dados.identificacao.setor}
+                titular={dados.identificacao.titular}
+                endereco={dados.identificacao.endereco}
+                numero={dados.identificacao.numero}
+              />
+              
+              <PdfSection title={`REGISTROS FOTOGRÁFICOS - PARTE ${index + 1}`}>
+                <div className="pdf-photos-grid">
+                  {par.map((foto, fIdx) => (
+                    <div key={`foto-${index}-${fIdx}`} className="pdf-photo-item">
+                      <img 
+                        src={foto.url} 
+                        alt={foto.label} 
+                        className="pdf-photo-img" 
+                      />
+                      <span className="pdf-photo-label">{foto.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </PdfSection>
+            </div>
+          ))}
+
+          {/* Página 2 (Agora Página Final) */}
           <div className="pdf-page A4">
             <PdfHeader 
               localidade={dados.identificacao.localidade}
